@@ -3,6 +3,7 @@ import './App.css';
 import React, {useState} from 'react';
 import ProductContext from './ProductContext';
 import ProductListing from './ProductListing';
+import AddProductForm from './AddProductForm';
 
 function App() {
   const [products, setProducts] = useState([
@@ -26,8 +27,18 @@ function App() {
   const context = {
     products: () => {
       return products;
+    },
+    addProduct: (productName, cost) => {
+      const cloned = [...products, {
+        id: Math.floor((Math.random()*100000) + 10000),
+        product_name: productName,
+        cost: cost
+      }]
+      setProducts(cloned);
     }
   }
+
+  
 
   return (
     <React.Fragment>
@@ -35,6 +46,7 @@ function App() {
       <ProductContext.Provider value={context}>
         <h1>My Catalog</h1>
         <ProductListing />
+        <AddProductForm />
       </ProductContext.Provider>
     </React.Fragment>
   );
